@@ -6,6 +6,7 @@
 #include "SDL_ttf.h"
 #include "DirectDraw.h"
 #include "DirtyRect.h"
+#include "string"
 class ast_Scripter
 {
 public:
@@ -36,5 +37,6 @@ public:
     unsigned long num_loaded_images;
     unsigned char *resize_buffer;
     size_t resize_buffer_size;
+    void loadImage(std::string file);
 }
 #endif

@@ -30,5 +30,5 @@ public:
     void clear();
     void fill(int w, int h);
     SDL_Rect calBoundingBox(SDL_Rect src1, SDL_Rect &src2);
-}
+};
 #endif

@@ -13,5 +13,5 @@ public:
     bool getTextureSize(int no, int &w, int &h);
     bool present();
     bool clear();
-}
+};
 #endif

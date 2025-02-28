@@ -16,6 +16,6 @@ public:
     bool init();
     // ----------------------------------------
     // variables and methods relevant to image
-    astScripter_image astScripter_image;
+    astScripter_image ast_image;
 };
 #endif

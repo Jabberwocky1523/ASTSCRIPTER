@@ -10,7 +10,7 @@ int main()
     SDL_Event event;
     s.ast_image.bg_info.image_surface = s.ast_image.loadImage("../zy.jpg");
     s.flush(&rect, false);
-    rect.x = 1000;
+    rect.x = 700;
     rect.y = 0;
     s.ast_image.bg_info.image_surface = s.ast_image.loadImage("../bg001.jpg");
     s.flush(&rect, true);

@@ -24,7 +24,11 @@ void ast_Scripter::flushDirect(SDL_Rect &rect)
     {
         return;
     }
-    SDL_BlitSurface(ast_image.accumulation_surface, &dst_rect, ast_image.screen_surface, &dst_rect);
+    SDL_Rect tmp;
+    tmp.h = ast_image.accumulation_surface->h;
+    tmp.w = ast_image.accumulation_surface->w;
+    tmp.x = tmp.y = 0;
+    SDL_BlitSurface(ast_image.accumulation_surface, &tmp, ast_image.screen_surface, &dst_rect);
     SDL_UpdateWindowSurfaceRects(ast_image.window, &dst_rect, 1);
 }
 bool ast_Scripter::init()

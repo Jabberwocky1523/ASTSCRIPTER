@@ -4,6 +4,7 @@
 #include "string"
 #include "Util.hpp"
 #include "DirtyRect.h"
+#include "AnimationInfo.h"
 class astScripter_image : public utils
 {
     /* Global definitions  */
@@ -15,11 +16,16 @@ public:
     float screen_scale_ratio1, screen_scale_ratio2;
     SDL_Rect screen_rect;
     SDL_Rect render_view_rect;
-    int screen_bpp;
+
+public:
+    // ----------------------------------------
+    // variables and methods relevant to animation
+    AnimationInfo bg_info;
 
 public:
     using string = std::string;
     typedef unsigned char uchar3[3];
+    bool initSDL();
     bool init();
     enum
     {
@@ -58,7 +64,6 @@ public:
     SDL_Surface *loadImage(string file);
     SDL_Surface *createRectangleSurface(string filename, bool *has_alpha, unsigned char *alpha = NULL);
     SDL_Surface *createSurfaceFromFile(string filename, bool *has_alpha, int *location);
-
     int resizeSurface(SDL_Surface *src, SDL_Surface *dst);
     void alphaBlend(SDL_Surface *mask_surface, int trans_mode, Uint32 mask_value = 255, SDL_Rect *clip = NULL,
                     SDL_Surface *src1 = NULL, SDL_Surface *src2 = NULL, SDL_Surface *dst = NULL);
@@ -69,5 +74,6 @@ public:
     void refreshSurface(SDL_Surface *surface, SDL_Rect *clip_src, int refresh_mode = REFRESH_NORMAL_MODE);
     void refreshSprite(int sprite_no, bool active_flag, int cell_no, SDL_Rect *check_src_rect, SDL_Rect *check_dst_rect);
     void createBackground();
+    void refresh(SDL_Rect &clip_src);
 };
 #endif

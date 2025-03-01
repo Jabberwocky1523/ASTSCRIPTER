@@ -3,20 +3,19 @@
 #include "stdio.h"
 #include "stdarg.h"
 #include "stdlib.h"
-#define OPENANDREAD(fp, buffer, len)      \
-    do                                    \
-    {                                     \
-        if (fp == NULL)                   \
-        {                                 \
-            printf("file not exists!\n"); \
-            return NULL;                  \
-        }                                 \
-        fseek(fp, 0, SEEK_END);           \
-        len = ftell(fp);                  \
-        fseek(fp, 0, SEEK_SET);           \
-        buffer = (char *)malloc(len);     \
-        fread(buffer, len, 1, fp);        \
-        fclose(fp);                       \
+#define OPENANDREAD(fp, buffer, len)           \
+    do                                         \
+    {                                          \
+        if (fp == NULL)                        \
+        {                                      \
+            printf("file not exists!\n");      \
+            return NULL;                       \
+        }                                      \
+        fseek(fp, 0, SEEK_END);                \
+        len = ftell(fp);                       \
+        fseek(fp, 0, SEEK_SET);                \
+        buffer = (unsigned char *)malloc(len); \
+        fread(buffer, len, 1, fp);             \
     } while (0)
 class utils
 {
@@ -48,11 +47,33 @@ public:
         (*color)[1] = convHexToDec(buf[3]) << 4 | convHexToDec(buf[4]);
         (*color)[2] = convHexToDec(buf[5]) << 4 | convHexToDec(buf[6]);
     }
-    bool getFile(const char *filename, void *buf, int &len)
+    bool getFile(const char *filename, unsigned char **buf, size_t &len)
     {
-        FILE *fp = fopen(filename, "rb+");
-        OPENANDREAD(fp, buf, len);
+        *buf = loadFileToMemory(filename, &len);
         return true;
+    }
+    unsigned char *loadFileToMemory(const char *path, size_t *fileSize)
+    {
+        FILE *file = fopen(path, "rb");
+        if (!file)
+        {
+            printf("Failed to open file: %s\n", path);
+            return NULL;
+        }
+        fseek(file, 0, SEEK_END);
+        *fileSize = ftell(file);
+        fseek(file, 0, SEEK_SET);
+
+        unsigned char *buffer = (unsigned char *)malloc(*fileSize);
+        if (!buffer)
+        {
+            printf("Failed to allocate memory for file data\n");
+            fclose(file);
+            return NULL;
+        }
+        fread(buffer, 1, *fileSize, file);
+        fclose(file);
+        return buffer;
     }
 };
 #endif

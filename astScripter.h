@@ -12,10 +12,11 @@ class ast_Scripter
 {
 public:
     DirectDraw directdraw;
-    ast_Scripter();
     bool init();
     // ----------------------------------------
     // variables and methods relevant to image
     astScripter_image ast_image;
+    void flush(SDL_Rect *rect, bool direct_flag);
+    void flushDirect(SDL_Rect &rect);
 };
 #endif
